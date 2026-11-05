@@ -1,19 +1,3 @@
-/* ==========================================================
-   Personal Portfolio — script.js
-   Features:
-   1. Mobile menu toggle (hamburger)
-   2. Dark / light mode with saved preference
-   3. Typing effect in the hero headline
-   4. Header shadow + active nav link on scroll
-   5. Scroll reveal animations + animated skill bars
-   6. Project filter buttons
-   7. Contact form validation
-   8. Copy email button
-   9. Back-to-top button
-   10. Auto-updating footer year
-   ========================================================== */
-
-// ---------- 1. Mobile menu toggle ----------
 const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
 
@@ -25,20 +9,18 @@ function toggleMenu() {
 
 menuToggle.addEventListener("click", toggleMenu);
 
-// Close the menu after clicking a link (mobile)
 document.querySelectorAll(".nav-link").forEach(link => {
   link.addEventListener("click", () => {
     if (navLinks.classList.contains("active")) toggleMenu();
   });
 });
 
-// ---------- 2. Dark / light mode ----------
 const themeToggle = document.getElementById("themeToggle");
 
 function loadTheme() {
   try {
     if (localStorage.getItem("theme") === "light") document.body.classList.add("light");
-  } catch (e) { /* storage not available — keep default dark theme */ }
+  } catch (e) {  }
 }
 
 themeToggle.addEventListener("click", () => {
@@ -48,7 +30,6 @@ themeToggle.addEventListener("click", () => {
 
 loadTheme();
 
-// ---------- 3. Typing effect ----------
 const typedEl = document.getElementById("typed");
 const roles = ["Web Developer", "Front-End Designer", "IT Student", "Problem Solver"];
 let roleIndex = 0;
@@ -74,7 +55,6 @@ function typeLoop() {
 
 typeLoop();
 
-// ---------- 4. Header shadow + active nav link on scroll ----------
 const header = document.getElementById("header");
 const sections = document.querySelectorAll("main section[id]");
 const toTop = document.getElementById("toTop");
@@ -84,7 +64,6 @@ function onScroll() {
   header.classList.toggle("scrolled", y > 20);
   toTop.classList.toggle("show", y > 500);
 
-  // Highlight the nav link of the section currently on screen
   let currentId = "home";
   sections.forEach(section => {
     if (y >= section.offsetTop - 120) currentId = section.id;
@@ -97,13 +76,11 @@ function onScroll() {
 window.addEventListener("scroll", onScroll);
 onScroll();
 
-// ---------- 5. Scroll reveal + skill bars ----------
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     entry.target.classList.add("visible");
 
-    // Animate skill bars when the Skills section appears
     entry.target.querySelectorAll(".fill").forEach(bar => {
       bar.style.width = bar.dataset.level + "%";
     });
@@ -113,7 +90,6 @@ const observer = new IntersectionObserver(entries => {
 
 document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-// ---------- 6. Project filter ----------
 const filterButtons = document.querySelectorAll(".filter-btn");
 const projectCards = document.querySelectorAll(".project-card");
 
@@ -130,7 +106,6 @@ filterButtons.forEach(button => {
   });
 });
 
-// ---------- 7. Contact form validation ----------
 const form = document.getElementById("contactForm");
 const formStatus = document.getElementById("formStatus");
 
@@ -141,7 +116,6 @@ function setError(inputId, message) {
 }
 
 function isValidEmail(email) {
-  // Simple pattern: something@something.something
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
@@ -165,7 +139,6 @@ function validateForm(e) {
 
   if (!valid) return false;
 
-  // Open the visitor's email app with the message pre-filled
   const subject = encodeURIComponent("Portfolio message from " + name);
   const body = encodeURIComponent(message + "\n\nFrom: " + name + " (" + email + ")");
   window.location.href = "mailto:xyrusbanal6@gmail.com?subject=" + subject + "&body=" + body;
@@ -177,7 +150,6 @@ function validateForm(e) {
 
 form.addEventListener("submit", validateForm);
 
-// ---------- 8. Copy email button ----------
 const copyBtn = document.getElementById("copyEmail");
 
 copyBtn.addEventListener("click", async () => {
@@ -190,8 +162,6 @@ copyBtn.addEventListener("click", async () => {
   setTimeout(() => (copyBtn.textContent = "Copy Email"), 2000);
 });
 
-// ---------- 9. Back-to-top button ----------
 toTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
-// ---------- 10. Footer year ----------
 document.getElementById("year").textContent = new Date().getFullYear();
